@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../js/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+    <style>
+        #inputInfo li {
+            list-style: none;
+        }
+
+        table,
+        th,
+        td {
+            width: 800px;
+            padding: 10px;
+            border: 1px solid black;
+            border-collapse: collapse;
+            background-color: pink;
+        }
+
+        #first th {
+            background-color: purple;
+        }
+
+        .wrapper {
+            overflow: hidden;
+            width: 800px;
+        }
+
+        #btn {
+            float: right;
+        }
+
+        #sure {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <!--用户输入信息的按钮-->
+    <div id="inputInfo">
+        <ul>
+            <li>姓名:<input type="text" id="nameInfo" /></li>
+            <li>邮箱:<input type="text" id="emailInfo" /></li>
+            <li>手机:<input type="text" id="phoneInfo" /></li>
+            <li>地址:<input type="text" id="addrInfo" /></li>
+
+            <!-- value="请输入你的姓名"
+            value="请输入你的邮箱"
+            value="请输入你的手机"
+            value="请输入你的地址" -->
+        </ul>
+    </div>
+    <!--用于新增表格获取数据的模块-->
+
+    <!--添加按钮-->
+    <div class="wrapper">
+        <input type="button" value="添加" id="sure" />
+        <button id="btn" onclick="method5('table')">打印为Excel</button>
+    </div>
+    <table id="table">
+        <tr id="first">
+            <th>姓名</th>
+            <th>邮箱</th>
+            <th>手机</th>
+            <th>地址</th>
+        </tr>
+    </table>
+    <script>
+        var btn = document.getElementById('sure')
+        var nameInfp = document.getElementById('nameInfo')
+        var emailInfo = document.getElementById('emailInfo')
+        var phoneInfo = document.getElementById('phoneInfo')
+        var addrInfo = document.getElementById('addrInfo')
+        var table = document.getElementById('table')
+
+        var setLocal = {
+            save(key, value) {
+                localStorage.setItem(key, JSON.stringify(value))
+            },
+            get(key) {
+                return localStorage.getItem(key)
+            }
+        }
+
+
+
+        btn.onclick = function () {
+
+            let obj = {
+                name: nameInfo.value,
+                email: emailInfo.value,
+                phone: phoneInfo.value,
+                addr: addrInfo.value
+            }
+
+            if (!obj.name || !obj.email || !obj.phone || !obj.addr) {
+                alert('请输入正确的信息')
+            } else {
+                var tr = createTr(obj); //调用函数返回tr标签
+                table.appendChild(tr);
+            }
+        }
+
+        function createTr(obj) {
+            var tr = document.createElement('tr')
+            for (var k in obj) {
+                var td = document.createElement('td')
+                td.innerHTML = obj[k]
+                tr.appendChild(td)
+            }
+            return tr
+        }
+
+        function setTEXT(ele, text) {
+            if (ele.innerHTML == 'undefined') {
+                ele.textContent = text;
+            } else {
+                ele.innerHTML = text
+            }
+        }
+
+        var idTmr;
+
+        function getExplorer() {
+            var explorer = window.navigator.userAgent;
+            //ie  
+            console.log(explorer)
+            if (explorer.indexOf("MSIE") >= 0) {
+                return 'ie';
+            }
+            //firefox  
+            else if (explorer.indexOf("Firefox") >= 0) {
+                return 'Firefox';
+            }
+            //Chrome  
+            else if (explorer.indexOf("Chrome") >= 0) {
+                return 'Chrome';
+            }
+            //Opera  
+            else if (explorer.indexOf("Opera") >= 0) {
+                return 'Opera';
+            }
+            //Safari  
+            else if (explorer.indexOf("Safari") >= 0) {
+                return 'Safari';
+            }
+        }
+
+        function method5(tableid) {
+            if (getExplorer() == 'ie') {
+                var curTbl = document.getElementById(tableid);
+                var oXL = new ActiveXObject("Excel.Application");
+                var oWB = oXL.Workbooks.Add();
+                var xlsheet = oWB.Worksheets(1);
+                var sel = document.body.createTextRange();
+                sel.moveToElementText(curTbl);
+                sel.select();
+                sel.execCommand("Copy");
+                xlsheet.Paste();
+                oXL.Visible = true;
+
+                try {
+                    var fname = oXL.Application.GetSaveAsFilename("Excel.xls",
+                        "Excel Spreadsheets (*.xls), *.xls");
+                } catch (e) {
+                    print("Nested catch caught " + e);
+                } finally {
+                    oWB.SaveAs(fname);
+                    oWB.Close(savechanges = false);
+                    oXL.Quit();
+                    oXL = null;
+                    idTmr = window.setInterval("Cleanup();", 1);
+                }
+
+            } else {
+                tableToExcel(tableid)
+            }
+        }
+
+        function Cleanup() {
+            window.clearInterval(idTmr);
+            CollectGarbage();
+        }
+        /* function tableToExcel(table, name) {
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html><head><meta charset="UTF-8"></head><body><table  border="1">{table}</table></body></html>',
+                base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                },
+                format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                }
+            if (!table.nodeType)
+                table = document.getElementById(table)
+            var ctx = {
+                worksheet: name || 'Worksheet',
+                table: table.innerHTML
+            }
+            window.location.href = uri + base64(format(template, ctx))
+        } */
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html><head><meta charset="UTF-8"></head><body><table  border="1">{table}</table></body></html>',
+                base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                },
+                format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) {
+                        return c[p];
+                    })
+                }
+            return function (table, name) {
+                if (!table.nodeType)
+                    table = document.getElementById(table)
+                var ctx = {
+                    worksheet: name || 'Worksheet',
+                    table: table.innerHTML
+                }
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    </script>
+
+</body>

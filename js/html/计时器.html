@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="number" value="5" id="input" style="width: 85px; height: 20px">
+    <div>
+        <button id="start">开始</button>
+        <button id="stop">暂停</button>
+    </div>
+    <script>
+        var Time = {
+            init: function(){
+                this.$input = document.getElementById('input');
+                this.$start = document.getElementById('start');
+                this.$stop = document.getElementById('stop');
+                this.$count = 0;
+                this.start();
+                this.stop()
+            },
+            start: function(){
+                var self = this;
+                self.$start.onclick = function(){
+                    self.$start.innerHTML = '继续';
+                    self.$count = 1;
+                    self.interval()
+                }
+            },
+            stop: function(){
+                let self = this;
+                this.$stop.onclick = function(){
+                    console.log(self)
+                    clearInterval(self.timer);
+                }
+            },
+            interval: function(){
+                var self = this;
+                console.log(self)
+                self.$start.innerHTML = '继续';
+                self.timer = setInterval(() => {
+                    if(self.$input.value > 0){
+                        self.$input.value --
+                    }else{
+                        self.$count = 0;
+                        self.$start.innerHTML = '开始';
+                    }
+                }, 1000);
+            }
+        }
+
+        Time.init()
+    </script>
+</body>
+
+</html>

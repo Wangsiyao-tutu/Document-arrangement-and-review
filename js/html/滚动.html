@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./js/jquery/jquery.js"></script>
+    <script>
+        $(document).bind("scroll", function () {
+
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+
+                p = $(this).scrollTop();
+                if (p <= 500) {
+                    if (t <= p) {
+                        //下滚
+                        scrollSpan = p - t;
+                        blurValue = blurValue + (scrollSpan * 0.03);
+
+                        scaleValuex = scaleValuex + (scrollSpan * 0.0005);
+                        scaleValuey = scaleValuey + (scrollSpan * 0.0005);
+                        var scale = scaleValuex + ',' + scaleValuey + ',' + scaleValuez;
+                        opacityValue = opacityValue - (scrollSpan * 0.005);
+
+                        //视频变模糊
+                        $('#vedioCover').css('-webkit-filter', 'blur(' + blurValue + 'px)');
+                        //视屏放大效果
+                        $('#vedioCover').css('transform', 'translate3d(0px, 0px, 0px) scale3d(' +
+                            scale + ')');
+
+                        //视频变模糊
+                        $('#mobileCover').css('-webkit-filter', 'blur(' + blurValue + 'px)');
+                        //视屏放大效果
+                        $('#mobileCover').css('transform', 'translate3d(0px, 0px, 0px) scale3d(' +
+                            scale + ')');
+
+                        //$('#hotelSearchSection').css('opacity',opacityValue).css('-webkit-filter','blur('+blurValue +'px)');
+                    } else { //上滚
+                        scrollSpan = t - p;
+                        blurValue = blurValue - (scrollSpan * 0.03);
+
+                        scaleValuex = scaleValuex - (scrollSpan * 0.0005);
+                        scaleValuey = scaleValuey - (scrollSpan * 0.0005);
+                        var scale = scaleValuex + ',' + scaleValuey + ',' + scaleValuez;
+                        opacityValue = opacityValue + (scrollSpan * 0.005);
+                        $('#vedioCover').css('-webkit-filter', 'blur(' + blurValue + 'px)');
+                        $('#vedioCover').css('transform', 'translate3d(0px, 0px, 0px) scale3d(' +
+                            scale + ')');
+
+                        $('#mobileCover').css('-webkit-filter', 'blur(' + blurValue + 'px)');
+                        $('#mobileCover').css('transform', 'translate3d(0px, 0px, 0px) scale3d(' +
+                            scale + ')');
+
+                        // $('#hotelSearchSection').css('opacity',opacityValue).css('-webkit-filter','blur('+blurValue +'px)');
+                    }
+
+                    setTimeout(function () {
+                        t = p;
+                    }, 0);
+                }
+            })
+        }, false)
+    </script>
+</body>
+
+</html>

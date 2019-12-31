@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 30px;
+            width: 100%;
+            background: #555;
+            opacity: 0.8;
+        }
+
+        #nav,
+        .nav {
+            height: 30px;
+            width: 100%;
+            background: #000;
+            opacity: 0.8;
+        }
+
+        .fixed {
+            position: fixed;
+            top: 30px;
+            left: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header"></div>
+    <div style="margin-top:30px;">
+        <script type="text/javascript">
+            for (var i = 0; i <= 100; i++)
+                document.write('<div>' + i + ' hello world' + '</div>');
+        </script>
+    </div>
+    <div id="nav"></div>
+    <script type="text/javascript">
+        for (var i = 101; i < 200; i++)
+            document.write('<div>' + i + ' hello world' + '</div>');
+    </script>
+    <script>
+        let index = 0;
+
+        function commont(ele) {
+            index++;
+            let nav = document.getElementById(ele);
+            let posTop = getElementViewTop(nav);
+            return {
+                nav,
+                posTop,
+                idx: index
+            }
+        }
+
+        let {nav, posTop, idx} = commont('nav')
+
+        function getElementViewTop(element) {
+            let actualTop = element.offsetTop;
+            let current = element.offsetParent;
+            while (current !== null) {
+                actualTop += current.offsetTop;
+                current = current.offsetParent;
+            }
+            let elementScrollTop = 0;
+            if (document.compatMode == "BackCompat") {
+                elementScrollTop = document.body.scrollTop;
+            } else {
+                elementScrollTop = document.documentElement.scrollTop;
+            }
+            return actualTop;
+        }
+
+        function getScroll() {
+            let top, left, width, height;
+            if (document.documentElement && document.documentElement.scrollTop) {
+                top = document.documentElement.scrollTop;
+                left = document.documentElement.scrollLeft;
+                width = document.documentElement.scrollWidth;
+                height = document.documentElement.scrollHeight;
+            } else if (document.body) {
+                top = document.body.scrollTop;
+                left = document.body.scrollLeft;
+                width = document.body.scrollWidth;
+                height = document.body.scrollHeight;
+            }
+            return {
+                'top': top,
+                'left': left,
+                'width': width,
+                'height': height
+            };
+        }
+
+        window.addEventListener('scroll', function (event) {
+            let scrollTop = getScroll().top;
+            /* var output = document.getElementById('output');
+            output.innerHTML = havTop + ' ' + scrollTop + ' ' + (havTop - scrollTop); */
+            if (posTop >= 30 && posTop - scrollTop <= 30){
+                nav.className = 'nav fixed';
+                console.log(090909090909)
+            }else {
+                nav.className = 'nav';
+                console.log(12313123232312312)
+            }
+        }, false);
+    </script>
+</body>
+
+</html>

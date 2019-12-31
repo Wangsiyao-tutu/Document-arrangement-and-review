@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #demo {
+            font-size: 20px
+        }
+
+        .header {
+            height: 80px;
+            background-color: orange;
+        }
+
+        .content {
+            display: flex;
+        }
+
+        .left {
+            flex: 2;
+            height: 500px;
+            max-height: 1000px;
+            background-color: rgb(106, 188, 209);
+        }
+
+        .main {
+            flex: 8;
+            height: 500px;
+            max-height: 1000px;
+            background-color: rgb(216, 134, 57);
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="demo">
+        <router-view></router-view>
+        <div class="content">
+            <router-view name='left'></router-view>
+            <router-view name='main'></router-view>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <script>
+        var header = {
+            template: '<div class="header">上边栏</div>'
+        }
+        var leftBox = {
+            template: '<div class="left">左侧边栏</div>'
+        }
+        var mainBox = {
+            template: '<div class="main">我是主体</div>'
+        }
+        var router = new VueRouter({
+            routes: [{
+                path: '/',
+                components: {
+                    default: header,
+                    left: leftBox,
+                    main: mainBox
+                }
+            }]
+        })
+        var vm = new Vue({
+            el: '#demo',
+            router
+        })
+    </script>
+</body>
+
+</html>

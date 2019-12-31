@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .box1 {
+            width: 100px;
+            height: 100px;
+            background: #000;
+        }
+
+        .box1:hover {
+
+            transform: translate(-10px, -10px);
+            /*2d位移，若用绝对定位改变hover时块的位置，则会一直闪*/
+            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, .2);
+            transition: 0.3s;
+            /*从没有hover过渡到hover用的时间*/
+            cursor: pointer;
+            /*将鼠标移到块时，鼠标显示为抓手*/
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chartmain" style="width:600px; height: 400px;"></div>
+    <script src="./js/echarts/echarts.js"></script>
+    <script type="text/javascript">
+        // var myChart = echarts.init(document.getElementById('chartmain'));
+        // option = {
+        //     title: {
+        //         text: '某站点用户访问来源', //大标题
+        //         subtext: '纯属虚构', //类似于副标题
+        //         x: 'center' //标题位置   居中
+        //     },
+        //     tooltip: {
+        //         trigger: 'item', //数据项图形触发，主要在散点图，饼图等无类目轴的图表中使用。
+        //         formatter: "{a} <br/>{b} : {c} ({d}%)" //{a}（系列名称），{b}（数据项名称），{c}（数值）, {d}（百分比）用于鼠标悬浮时对应的显示格式和内容
+        //     },
+        //     legend: { //图例组件。
+        //         orient: 'vertical', //图例列表的布局朝向
+        //         left: 'left',
+        //         data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        //     },
+        //     series: [ //系列列表。每个系列通过 type 决定自己的图表类型
+        //         {
+        //             name: '访问来源',
+        //             type: 'pie',
+        //             radius: '55%',
+        //             center: ['50%', '60%'],
+        //             data: [{
+        //                     value: 335,
+        //                     name: '直接访问'
+        //                 },
+        //                 {
+        //                     value: 310,
+        //                     name: '邮件营销'
+        //                 },
+        //                 {
+        //                     value: 234,
+        //                     name: '联盟广告'
+        //                 },
+        //                 {
+        //                     value: 135,
+        //                     name: '视频广告'
+        //                 },
+        //                 {
+        //                     value: 1548,
+        //                     name: '搜索引擎'
+        //                 }
+        //             ],
+        //             itemStyle: {
+        //                 emphasis: {
+        //                     shadowBlur: 10,
+        //                     shadowOffsetX: 0,
+        //                     shadowColor: 'rgba(0, 0, 0, 0.5)'
+        //                 }
+        //             }
+        //         }
+        //     ]
+        // };
+        // myChart.setOption(option);
+        var chartmain = document.getElementById('chartmain')
+        var data = [{
+                            value: 335,
+                            name: '直接访问'
+                        },
+                        {
+                            value: 310,
+                            name: '邮件营销'
+                        },
+                        {
+                            value: 234,
+                            name: '联盟广告'
+                        },
+                        {
+                            value: 135,
+                            name: '视频广告'
+                        },
+                        {
+                            value: 1548,
+                            name: '搜索引擎'
+                        }
+                    ]
+
+        var bar = (el, highPort, horizon) => {
+            let mychart = echarts.init(document.getElementById(el))
+            let name = [],
+                data = [];
+            for (let item of highPort) {
+                name.unshift(item.name);
+                data.unshift(item.value);
+            }
+            var highPortOption = {
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: {
+                        type: "shadow"
+                    }
+                },
+                grid: {
+                    top: "5%",
+                    bottom: "15%",
+                    left: "18%",
+                    right: "5%"
+                },
+                xAxis: {
+                    minlnterval: 1,
+                    boundaryGap: [0, 0.1],
+                    naineTextStyle: {
+                        fontSize: "0.2rem"
+                    },
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: "#666666",
+                        }
+                    },
+                    axisLabel: {
+                        fontSize: "0.2rem",
+                        fontWeight: 700,
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    data: horizon ? name : "",
+
+                },
+                yAxis: {
+                    name: "",
+                    nameTextStyle: {
+                        fontSize: "0.2rem",
+                        fontWeight: 700
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    data: horizon ? "" : name,
+                    axisLine: {
+                        lineStyle: {
+                            color: "#666666"
+                        }
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        fontSize: "0.2rem",
+                        fontWeight: 700
+                    },
+                },
+                series: [{
+                    name: "",
+                    type: "bar",
+                    barWidth: 20,
+                    barMinHeight: 5,
+                    itemStyle: {
+                        normal: {
+                            // color: new echarts.graphic.LinearGradient (0.5, 0, 0, 0, [{ 
+                            // offset: 0, 
+                            // color: "#006602"
+                            // }, {
+                            // offset: 0, 
+                            color: "#0099FF"
+                            // }],false)
+                        },
+
+                    },
+                    data: data
+                }]
+            }
+            mychart.setOption(highPortOption, true)
+        }
+
+        bar(chartmain, data)
+    </script>
+    </script>
+</body>
+
+</html>

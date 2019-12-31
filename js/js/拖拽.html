@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #div {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            /* transition: all .2s; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="div"></div>
+    <script>
+        window.onload = function () {
+            let p = new Drag('div');
+            p.init();
+        }
+
+        function Drag(id) {
+            this.elmt = document.getElementById(id);
+            this.disX = 0;
+            this.disY = 0;
+        }
+
+        Drag.prototype.init = function () {
+            var self = this;
+            this.elmt.onmousedown = function (e) {
+                var oEvent=e||event;
+                self.fnDown(oEvent);
+                return false;
+            }
+        }
+
+        Drag.prototype.fnDown = function(e){
+            let self = this;
+            this.disX = e.clientX - this.elmt.offsetLeft;
+            this.disY = e.clientY - this.elmt.offsetTop;
+            document.onmousemove = function(e){
+                let oEvent = e||event;
+                self.fnMove(oEvent)
+            }
+            document.onmouseup = function(){
+                self.fnUp();
+            }
+        }
+
+        Drag.prototype.fnMove = function(e){
+            this.elmt.style.left=e.clientX-this.disX+'px';
+            this.elmt.style.top=e.clientY-this.disY+'px';
+        }
+
+        Drag.prototype.fnUp=function(){//原型
+            document.onmousemove=null;
+            document.onmouseup=null;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img{
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="show()">请求数据</button>
+    <a href="http://www.kuaidi100.com/query?type=yuantong&postid=11111111111">跳转</a>
+    <script>
+        const btn = document.getElementsByTagName('button')[0]
+        function show() {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', 'https://api.apiopen.top/musicBroadcastingDetails?channelname=public_tuijian_spring')
+            xhr.send()
+            xhr.onload = function () {
+                if (xhr.status == 200 && xhr.readyState == 4) {
+                    let result = eval("(" + xhr.responseText + ")").result.songlist
+                    for(let k in result){
+                        let img = document.createElement('img')
+                        img.src = result[k].thumb
+                        document.body.appendChild(img);
+                      
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

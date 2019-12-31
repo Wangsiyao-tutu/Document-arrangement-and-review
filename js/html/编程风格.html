@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //数组赋值，使用解构的方式
+        const arr = [1, 2, 3]
+        const [first, second, third] = arr;
+
+
+        // bad
+        /* function getFullName(user) {
+            const firstName = user.firstName;
+            const lastName = user.lastName;
+        } */
+        //good
+        function getFullName(obj) {
+            const { firstName, lastName } = obj;
+        }
+
+
+        //函数的参数如果是对象的成员，优先使用解构赋值
+        function getFullName({ firstName, lastName }) {
+            return { firstName, lastName }
+        }
+
+
+        //字符串用单引号或者反引号
+        const a = 'foobar';
+        const b = `foo${a}bar`;
+        console.log(a, b)
+
+
+        const a = {};
+        Object.assign(a, { x: 3 });
+        console.log(a)
+
+
+        function concatenateAll(...args) {
+            return args.join('');
+        }
+
+
+        function handleThings(opts = {}) {
+            //do something……
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <script>
+        (function (designWidth, maxWidth) {
+            var doc = document,
+                win = window,
+                docEl = doc.documentElement,
+                remStyle = document.createElement("style"),
+                // resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                tid;
+            function refreshRem() {
+                var width = docEl.getBoundingClientRect().width;
+                maxWidth = maxWidth || 540;
+                width > maxWidth && (width = maxWidth);
+                var rem = width * 100 / designWidth;
+                remStyle.innerHTML = 'html{font-size:' + rem + 'px;}';
+                console.log(docEl.style.fontSize)
+            }
+
+            if (docEl.firstElementChild) {
+                docEl.firstElementChild.appendChild(remStyle);
+            } else {
+                var wrap = doc.createElement("div");
+                wrap.appendChild(remStyle);
+                doc.write(wrap.innerHTML);
+                wrap = null;
+            }
+
+            //要等 wiewport 设置好后才能执行 refreshRem，不然 refreshRem 会执行2次；    
+            refreshRem();
+            win.addEventListener("resize", function () {
+                clearTimeout(tid); //防止执行两次        
+                tid = setTimeout(refreshRem, 300);
+            }, false);
+
+            win.addEventListener("pageshow", function (e) {
+                if (e.persisted) { // 浏览器后退的时候重新计算            
+                clearTimeout(tid);
+                    tid = setTimeout(refreshRem, 300);
+                }
+            }, false);
+
+            if (doc.readyState === "complete") {
+                doc.body.style.fontSize = "16px";
+            } else {
+                doc.addEventListener("DOMContentLoaded", function (e) {
+                    doc.body.style.fontSize = "16px";
+                }, false);
+            }
+        })(750, 750);
+    </script> -->
+    <style>
+        body{
+            font-size: 19px;
+        }
+        .box1 {
+            width: 16px;
+            height: 16px;
+            background: #000;
+        }
+        .box3 {
+            width: 1rem;
+            height: 1rem;
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1"></div>
+    <div class="box3"></div>
+    <script>
+        console.log(window.devicePixelRatio)
+        document.documentElement.style.fontSize = 100 + 'px'
+        console.log(document.documentElement.style.fontSize)
+        /* (function (doc, win) {
+            //基本的页面内的元素
+            var docEl = doc.documentElement,
+                //resize
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                //当作回调函数
+                recalc = function () {
+                    //获得页面的宽度
+                    var clientWidth = docEl.clientWidth;
+                    console.log(clientWidth)
+                    //判断cilentWidth是否为空
+                    if (!clientWidth) return;
+                    //设置页面的根字号
+                    docEl.style.fontSize = 48 * (clientWidth / 360) + 'px'; 
+                    console.log(docEl.style.fontSize)
+                };
+            //判断浏览器是否支持addEventListener监听事件
+            if (!doc.addEventListener) return;
+            //resizeEvt的变化，改变字号
+            win.addEventListener(resizeEvt, recalc, false);
+            //Dom加载完毕后，执行字号设置
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window); */
+
+
+
+        /* // 得到屏幕的宽度
+         let htmlWidth = document.documentElement.clientWidth || document.body.clientWidth;
+        // 得到html的Dom元素
+        let htmlDom = document.getElementsByTagName('html')[0];
+        设置根元素字体大小
+        htmlDom.style.fontSize = htmlWidth / 20 + 'px';
+        console.log(htmlDom.style.fontSize == '51.6px') */
+
+
+
+        //第三方库的rem适配
+        //第三方库用的一般是使用px单位，无法使用rem适配不同设备的屏幕。
+        // 解决办法：使用px2rem-loader插件将第三方ui库的px转换成rem单位
+    </script>
+</body>
+
+</html>

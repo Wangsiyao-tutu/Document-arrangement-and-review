@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 40px;
+            font-family: 'Open Sans', 'sans-serif';
+            background-color: #fff;
+            color: #444;
+        }
+
+        .wrapper {
+            max-width: 940px;
+            margin: 0 20px;
+            grid-gap: 10px;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .wrapper {
+            display: grid;
+            margin: 0 auto;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-rows: minmax(50px, auto);
+        }
+
+        .panel {
+            margin-left: 5px;
+            margin-right: 5px;
+            flex: 1 1 200px;
+        }
+
+        .tall-panel {
+            grid-row-end: span 2;
+        }
+
+        .header .footer {
+            margin-right: 5px;
+            margin-left: 5px;
+            flex: 0 1 100%;
+            grid-column: 1/-1;
+        }
+
+        .wrapper>* {
+            background-color: #444;
+            color: #fff;
+            border-radius: 5px;
+            padding: 5px;
+            font-size: 150%;
+            margin-bottom: 5px;
+        }
+
+        /* @supports(display: grid) {
+            .wrapper>* {
+                margin: 0;
+            }
+        } */
+    </style>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <header class="header">My header</header>
+        <div class="panel">panel A</div>
+        <div class="panel">panel B</div>
+        <div class="panel tall-panel">panel C</div>
+        <div class="panel">panel D</div>
+        <div class="panel">panel E</div>
+        <div class="panel">panel F</div>
+        <div class="panel tall-panel">panel G</div>
+        <div class="panel tall-panel">panel H</div>
+        <div class="panel">panel I</div>
+        <div class="panel">panel J</div>
+        <footer class="footer">My footer</footer>
+
+    </div>
+    <script>
+        /* //设置行，列
+        var cols = 5; //5列
+        var rows = 4; //4行
+        var htmlstr = "<table border='1px'>";
+        for (i = 1; i <= rows; i++) {
+            htmlstr += "<tr>";
+            for (j = 1; j <= cols; j++) {
+                htmlstr += "<td >" + i + "行" + j + "列" + "</td>";
+            }
+            htmlstr += "</tr>";
+        }
+        htmlstr += "</table>";
+        document.write(htmlstr); */
+
+
+    </script>
+</body>
+
+</html>

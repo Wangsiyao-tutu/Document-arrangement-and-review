@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>div横向拖拽排序</title>
+    <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+    <style type="text/css">
+        body,
+        div {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        .box {
+            position: relative;
+            margin-left: 15px;
+            padding: 10px;
+            padding-right: 0px;
+            width: 810px;
+            border: blue solid 1px;
+        }
+
+        .box ul {
+            list-style: none;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        .drag {
+            float: left;
+            border: #000 solid 1px;
+            text-align: center;
+        }
+
+        .box ul li a {
+            display: block;
+            padding: 10px 25px;
+        }
+
+        .drag-dash {
+            position: absolute;
+            border: #000 solid 1px;
+            background: #ececec;
+        }
+
+        .dash {
+            float: left;
+            border: 1px solid transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>div横向拖拽排序</h1>
+    <div class="box">
+        <ul>
+            <li class="drag"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow"
+                    rel="external nofollow" rel="external nofollow">导航一</a></li>
+            <li class="drag"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow"
+                    rel="external nofollow" rel="external nofollow">导航二导航</a></li>
+            <li class="drag"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow"
+                    rel="external nofollow" rel="external nofollow">导航导航导航三</a></li>
+            <li class="drag"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow"
+                    rel="external nofollow" rel="external nofollow">导航导航四</a></li>
+            <li class="drag"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow"
+                    rel="external nofollow" rel="external nofollow">导五</a></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        function drag_fun(doc, el) {
+            $(doc).ready(function () {
+                var range = {
+                    x: 0,
+                    y: 0
+                }; //鼠标元素偏移量
+                var lastPos = {
+                    x: 0,
+                    y: 0,
+                    x1: 0,
+                    y1: 0
+                }; //拖拽对象的四个坐标
+                var tarPos = {
+                    x: 0,
+                    y: 0,
+                    x1: 0,
+                    y1: 0
+                }; //目标元素对象的坐标初始化
+                var theDiv = null,
+                    move = false;
+                var choose = false; //拖拽对象 拖拽状态 选中状态
+                var theDivId = 0,
+                    theDivHeight = 0,
+                    theDivHalf = 0;
+                var tarFirstY = 0; //拖拽对象的索引、高度、的初始化。
+                var tarDiv = null,
+                    tarFirst, tempDiv; //要插入的目标元素的对象, 临时的虚线对象
+                var initPos = {
+                    x: 0,
+                    y: 0
+                };
+                var theDivWidth; //拖拽对象的宽度
+                $(el).each(function () {
+                    $(this).mousedown(function (event) {
+                        choose = true;
+                        //拖拽对象
+                        theDiv = $(this);
+                        //记录拖拽元素初始位置
+                        initPos.x = theDiv.position().left;
+                        initPos.y = theDiv.position().top;
+                        //鼠标元素相对偏移量
+                        range.x = event.pageX - theDiv.position().left;
+                        range.y = event.pageY - theDiv.position().top;
+                        theDivId = theDiv.index();
+                        theDivWidth = theDiv.width();
+                        theDivHalf = theDivWidth / 2;
+                        theDiv.removeClass("drag");
+                        theDiv.addClass("drag-dash");
+                        theDiv.css({
+                            left: initPos.x + 'px',
+                            top: initPos.y + 'px'
+                        });
+                        // 创建新元素 插入拖拽元素之前的位置(虚线框)
+                        $("<div class='dash'></div>").insertBefore(theDiv);
+                        tempDiv = $(".dash");
+                        $(".dash").css("width", theDivWidth);
+                        return false
+                    });
+                });
+                $(doc).mouseup(function (event) {
+                    if (!choose) {
+                        return false;
+                    }
+                    if (!move) {
+                        //恢复对象的初始样式
+                        theDiv.removeClass("drag-dash");
+                        theDiv.addClass("drag");
+                        tempDiv.remove(); // 删除新建的虚线div
+                        choose = false;
+                        return false;
+                    }
+                    theDiv.insertBefore(tempDiv); // 拖拽元素插入到 虚线div的位置上
+                    //恢复对象的初始样式
+                    theDiv.removeClass("drag-dash");
+                    theDiv.addClass("drag");
+                    tempDiv.remove(); // 删除新建的虚线div
+                    move = false;
+                    choose = false;
+                    return false
+                }).mousemove(function (event) {
+                    if (!choose) {
+                        return false
+                    }
+                    move = true;
+                    lastPos.x = event.pageX - range.x;
+                    lastPos.y = event.pageY - range.y;
+                    lastPos.x1 = lastPos.x + theDivWidth;
+                    // 拖拽元素随鼠标移动
+                    theDiv.css({
+                        left: lastPos.x + 'px',
+                        top: lastPos.y + 'px'
+                    });
+                    // 拖拽元素随鼠标移动 查找插入目标元素
+                    var $main = $('.drag'); // 局部变量：按照重新排列过的顺序 再次获取 各个元素的坐标，
+                    $main.each(function () {
+                        tarDiv = $(this);
+                        tarPos.x = tarDiv.position().left;
+                        tarPos.y = tarDiv.position().top;
+                        tarPos.x1 = tarPos.x + tarDiv.width() / 2;
+                        tarFirst = $main.eq(0); // 获得第一个元素\
+                        tarFirstX = tarFirst.position().left + theDivHalf; // 第一个元素对象的中心纵坐标
+                        //拖拽对象 移动到第一个位置
+                        if (lastPos.x <= tarFirstX) {
+                            tempDiv.insertBefore(tarFirst);
+                        }
+                        //判断要插入目标元素的 坐标后， 直接插入
+                        if (lastPos.x >= tarPos.x - theDivHalf && lastPos.x1 >= tarPos.x1) {
+                            tempDiv.insertAfter(tarDiv);
+                        }
+                    });
+                    return false
+                });
+            });
+        }
+        drag_fun(document, '.drag')
+    </script>
+</body>
+
+</html>

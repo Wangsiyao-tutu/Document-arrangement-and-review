@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    strTest = " 1"; for ( var i=0; i < 25; i ++ ){ strTest +=strTest; } alert(strTest); delete strTest;
+        CollectGarbage();, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* strTest = "1";
+        for (var i = 0; i < 5; i++) {
+            strTest += strTest;
+        }
+        alert(strTest);
+        delete strTest;
+        // CollectGarbage();
+        console.log(strTest) */
+
+
+        function testObject() {
+            var _obj1 = new Object();
+        }
+        function testObject2() {
+            var _obj2 = new Object();
+            return _obj2;
+        }
+        // 示例1
+        testObject();
+        // 示例2 
+        testObject2()
+        // 示例3 
+        var obj3 = testObject2();
+        obj3 = null;
+        // 示例4 
+        var obj4 = testObject2();
+        var arr = [obj4];
+        obj3 = null;
+        arr = [];
+
+        function writeXLS() {
+            //(略...) 
+            excel.Quit();
+            excel = null;
+            setTimeout(CollectGarbage, 1);
+        }
+    </script>
+</body>
+
+</html>
