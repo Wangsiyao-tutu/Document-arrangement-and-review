@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity .5s;
+        }
+
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p><button @click="isShow=!isShow">按钮</button></p>
+        <transition name="fade">
+            <span v-cloak v-if="isShow">{{msg}}</span>
+        </transition>
+    </div>
+    <script src="./lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'wsy',
+                isShow: true
+            },
+            methods: {
+
+            },
+            watch: {
+                isShow() {
+                    console.log(this.isShow)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

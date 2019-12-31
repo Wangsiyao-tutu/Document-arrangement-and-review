@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .outter {
+            padding: 20px;
+            background: rgb(180, 171, 171);
+        }
+
+        .inner {
+            height: 100px;
+            background: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- .stop阻止事件冒泡 -->
+        <!-- <div class="inner" @click="inner">
+            <input type="button" value="浪起来" @click.stop="show">
+        </div> -->
+
+        <!-- .prevent阻止了默认事件 -->
+        <!-- <a href="http://www.baidu.com" @click.prevent="link">去百度</a> -->
+
+        <!-- .capture实现捕获触发机制 -->
+        <!-- 默认会先触发btn的事件，在触发inner的事件，捕获触发机制就是从外到内 -->
+        <div class="inner" @click.capture="inner">
+            <input type="button" value="浪起来" @click="show">
+        </div>
+
+        <!-- .self实现只有点击当前元素才会触发事件处理函数 -->
+        <!-- .self只会阻止自己身上冒泡行为的触发，并不会真正的阻止所有的冒泡行为 -->
+        <!-- .stop只会阻止包括自身元素之外的嵌套的元素的冒泡行为 -->
+        <!-- <div class="outter" @click="outter">
+            <div class="inner" @click.stop="inner">
+                <input type="button" value="按钮" @click="show">
+            </div>
+        </div> -->
+
+        <!-- .once只触发一次事件函数 -->
+        <!-- <a href="https://cn.vuejs.org/v2/api/#v-once" @click.once="link">vue官网</a> -->
+    </div>
+
+    <script src="../lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+                outter() {
+                    console.log('__触发outter的点击事件__');
+                },
+                inner() {
+                    console.log('__触发inner的点击事件__');
+                },
+                show() {
+                    console.log('__触发button的点击事件__');
+                },
+                link() {
+                    console.log('__触发链接的点击事件__')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

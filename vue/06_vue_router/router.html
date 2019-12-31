@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .router-link-active,
+        .myactive {
+            font-weight: 800;
+            font-style: italic;
+            background: yellow;
+            text-decoration: underline;
+        }
+
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            transform: translateX(140px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="demo">
+        <p>
+            <!-- 使用 router-link 组件来导航. -->
+            <!-- 通过传入 `to` 属性指定链接. -->
+            <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+            <!-- 可以通过tag属性来改变默认渲染的a标签为其他标签 -->
+            <router-link to="/login" tag="span">登录</router-link>
+            <router-link to="/register">注册</router-link>
+        </p>
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <!-- 这是vue提供的元素，专门用来 当作占位符的 -->
+        <transition mode="out-in">
+            <router-view></router-view>
+        </transition>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 1/安装vue-router路由模块 -->
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <script>
+        //组件的模板对象
+        const login = {
+            template: '<h1>登录</h1>'
+        }
+        const register = {
+            template: '<h1>注册</h1>'
+        }
+
+        //route表示路由匹配规则
+        const routes = [
+            //每个路由规则都是一个对象，找对象身上必须有两个属性，
+            //1.path：表示要监听的路由链接地址  
+            //2.components: 表示如果路由是前面匹配的path时，要展示的组件
+            //注意component的属性值，必须是一个组件的模板对象不能是组件的应用名称
+            {
+                path: '/',
+                redirect: '/login'
+            },
+            {
+                path: '/login',
+                component: login
+            },
+            {
+                path: '/register',
+                component: register
+            },
+        ]
+
+        /* 2.创建一个路由对象，当导入 vue-router 在window全局中就会有一个路由的构造函数，VueRouter */
+        var routerObj = new VueRouter({
+            routes,
+
+            //路由高亮设置的两种方法，①路由本身自带的属性，②通过linkActiveClass:''自己更改 ，然后style写样式
+            linkActiveClass: 'myactive'
+        })
+
+        //创建vue实例，得到viewModel
+        var vm = new Vue({
+            router: routerObj,
+        }).$mount('#demo')
+    </script>
+</body>
+
+</html>

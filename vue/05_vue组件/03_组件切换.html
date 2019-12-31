@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0;
+        }
+
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: all .5s ease;
+        }
+    </style>
+    <script src="../lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="state='login'">登陆</button>
+        <button @click="state='register'">注册</button>
+
+        <!-- vue提供的标签component,占位符,会被is属性对应的template模板替代 -->
+        <transition name='fade' mode='out-in'>
+            <component :is="state"></component>
+        </transition>
+
+    </div>
+
+    <template id="login">
+        <h5>登陆组件</h5>
+    </template>
+
+    <template id="register">
+        <h5>注册组件</h5>
+    </template>
+
+    <script>
+        Vue.component('login', {
+            template: '<h1>登陆组件</h1>'
+        })
+        Vue.component('register', {
+            template: '<h1>注册组件</h1>'
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello world',
+                state: 'login'
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

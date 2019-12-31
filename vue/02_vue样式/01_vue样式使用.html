@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        span {
+            font-size: 50px;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .blue {
+            color: blue;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .active {
+            color: rgb(31, 230, 127);
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="demo" v-cloak>
+        <span class="red">01</span>
+
+        <!-- 直接传递数组 -->
+        <span :class="['red','italic']">02</span>
+
+        <!-- 在数组里使用三元表达式 -->
+        <span :class="['blue', {'active':flag}]">03</span>
+        <span :class="['blue', flag ? 'italic' : '']">04</span>
+
+        <!-- 内联样式 -->
+        <span :style='{"color":"red","font-size": 1000 }'>内联样式</span>
+        <span :style='styleObj1'>内联样式_02</span>
+
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: '#demo',
+            data() {
+                return {
+                    a: false,
+                    flag: true,
+                    styleObj1: {
+                        color: "black",
+                        border: "1px solid #333",
+                        "font-size": "10px"
+                    },
+                    styleObj2: {
+                        'font-style': 'italic'
+                    }
+                }
+            },
+
+        })
+
+        let result = vm.flag ? 1 : 2
+        let arr = -1 ? 1 : 2
+    </script>
+</body>
+
+</html>

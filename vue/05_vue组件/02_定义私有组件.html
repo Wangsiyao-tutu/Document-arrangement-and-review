@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+
+<body>
+    <template id="template_01">
+        <div>
+            <button @click="increament">用template标签,直接定义在外面,通过抓取id名称来获取</button>
+            <p>{{count}}</p>
+        </div>
+    </template>
+
+    <div id="app">
+        <compt></compt>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 'hello world'
+            },
+            components: {
+                compt: {
+                    template: '#template_01',
+                    //data属性一定要用函数return出数据变量,不然耦合性高.
+                    data: function() {
+                        return {
+                            count: 0
+                        }
+                    },
+                    methods: {
+                        increament: function() {
+                            this.count++
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

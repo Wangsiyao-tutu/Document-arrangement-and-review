@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../../js/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>
+                    Name:
+                    <input type="text" v-model="name">{{name}}
+                </label>
+
+                <button type="button" class="btn btn-primary" @click="add">添加</button>
+
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.ctime}}</td>
+                    <td>
+                        <a href="" @click.prevent='del(item.id)'>删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="../../js/vue-resource/vue-resource.min.js"></script>
+    <script>
+
+        //如果我们通过全局配置了请求的数据接口的 根域名 则每次发起http请求的时候，请求的url路径，应该用相对路径开头，不能带斜线，否则不会启用根路径;
+        // Vue.http.options.root = 'https://api';
+        //全局配置emulation为true;
+        Vue.http.options.emulationJSON = true;
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list:[],
+                name: ''
+            },
+            created(){
+                this.getAllList()
+            },
+            methods: {
+                add: function () {
+                    this.$http.post('postCars',{name:this.name},{emulationJSON:true}).then((data=>{
+                        console.log(data)
+                        this.getAllList()
+                    }),function(){
+                        console.log('发送失败')
+                    })
+                },
+                getAllList:function(){
+                    this.$http.get('https://api.apiopen.top/todayVideo').then((data=>{
+                        let result = data.body.result
+                        console.log(result)
+                    }));
+                },
+                del(id){
+                    this.$http.get('getCars/' + id).then((data)=>{
+                        if(data.body.code == 200){
+                            console.log('删除成功')
+                            this.getAllList()
+                        }
+                    })
+                },
+            },
+        })
+    </script>
+</body>
+
+</html>

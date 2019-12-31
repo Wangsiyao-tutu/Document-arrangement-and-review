@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="keyWord">
+        <table class="table table-bordered table-hover" v-cloak>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in searchHandler(keyWord)">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="./lib/vue.js"></script>
+    <script src="./lib/jquery.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                list: [{
+                        id: 1,
+                        name: '奔驰'
+                    },
+                    {
+                        id: 2,
+                        name: '宝马'
+                    },
+                    {
+                        id: 3,
+                        name: '本田'
+                    },
+                    {
+                        id: 4,
+                        name: '奥迪'
+                    },
+                ],
+                keyWord: ''
+            },
+            methods: {
+                searchHandler(keyWord) {
+                    let newList = []
+                    this.list.filter(item => {
+                        if (item.name.includes(keyWord)) {
+                            newList.push(item)
+                        }
+                    })
+                    return newList
+                }
+            },
+            watch: {}
+        })
+    </script>
+</body>
+
+</html>

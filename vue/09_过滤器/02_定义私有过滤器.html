@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{msg | timeFilter()}}
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                msg: 1556555555000
+            },
+            //两个条件：过滤名称和处理函数
+            //如果全局过滤器，和私有过滤器重名，优先调用私有过滤器，遵循就近原则
+            filters: {
+                timeFilter: function (dateStr, pattern) {
+                    let dt = new Date()
+
+                    let y = dt.getFullYear()
+                    let m = (dt.getMonth() + 1).toString().padStart(2, '0')
+                    let d = dt.getDate().toString().padStart(2, '0')
+
+                    if (pattern && pattern.toLowerCase() == 'yyyy-mm-dd') {
+                        return `${y}-${m}-${d}`
+                    } else {
+                        let hh = dt.getHours().toString().padStart(2, '0')
+                        let mm = dt.getMinutes().toString().padStart(2, '0')
+                        let ss = dt.getSeconds().toString().padStart(2, '0')
+                        return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

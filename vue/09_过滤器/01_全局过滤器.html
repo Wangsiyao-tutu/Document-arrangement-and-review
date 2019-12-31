@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{msg | msgFormat('疯狂','shasha') | test}}</p>
+        <input type="text" @keyup.f2="show">
+    </div>
+
+    <!-- <div id="app_01">
+        <p>{{msg | msgFormat('疯狂','shasha') | test}}</p>
+    </div> -->
+
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/jquery.js"></script>
+    <script>
+        Vue.filter('msgFormat', function (msg, arg, arg2) {
+            //字符串的replace方法，第一个参数可以为正则表达式或是字符串
+            return msg.replace(/单纯/g, arg + arg2)
+        })
+        Vue.filter('test', function (msg) {
+            //字符串的replace方法，第一个参数可以为正则表达式或是字符串
+            return msg + '==================='
+        })
+
+        Vue.config.keyCodes.f2 = 113
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '曾经，我是个单纯的男人，单纯的我，傻傻的问，谁是世界上最单纯的男人'
+            },
+            methods: {
+                show() {
+                    console.log(9)
+                }
+            }
+        })
+
+        // var vm_01 = new Vue({
+        //     el: '#app_01',
+        //     data: {
+        //         msg: '曾经，我是个单纯的男人，单纯的我，傻傻的问，谁是世界上最单纯的男人'
+        //     },
+        //     methods: {
+
+        //     }
+        // })
+
+        //过滤器定义语法
+        // Vue.filter('过滤器名称', function (data) {
+        //    doSomething……
+        // })
+
+        //过滤器调用格式
+        // {{name|过滤器名称}}
+    </script>
+</body>
+
+</html>

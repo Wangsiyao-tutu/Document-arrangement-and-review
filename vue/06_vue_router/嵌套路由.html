@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="demo">
+        <router-link to='/index'>跳转至首页</router-link>
+        <router-view></router-view>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 1/安装vue-router路由模块 -->
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+
+    <template id="tmp1">
+        <div>
+            <h1>这里是首页</h1>
+            <router-link to='/index/login'>登录</router-link>
+            <router-link to='/index/register'>注册</router-link>
+            <router-view></router-view>
+        </div>
+    </template>
+
+    <script>
+        const login = {
+            template: '<h3>登录</h3>'
+        }
+        const register = {
+            template: '<h3>注册</h3>'
+        }
+
+        const index = {
+            template: '#tmp1'
+        }
+
+        var router = new VueRouter({
+            routes: [{
+                path: '/index',
+                component: index,
+                //children属性实现路由嵌套
+                children: [{
+                        path: 'login',
+                        component: login,
+                        name: login
+                    },
+                    {
+                        path: 'register',
+                        component: register,
+                        name: register
+                    }
+                ]
+            }]
+        })
+
+        var vm = new Vue({
+            el: '#demo',
+            router,
+            watch: {
+                '$route.path': function (newVal, oldVal) {
+                    console.log(newVal, oldVal)
+                }
+            },
+            //1.只要计算属性，所用到的任何data数据发生变化了，就会重新计算这个属性的值
+            //2.计算属性的求职结果，会被缓存起来，方便下次调用；如果计算属性所依赖的任何数据，都没有发生过变化，则不会重新对计算属性求值，提高运行效率
+            computed: {
+                //在computed中可以定义一些属性，这些属性叫做计算属性，
+                //计算属性的本质就是一个方法，只不过我们使用的时候，是把它们的名称直接当作属性来使用的，并不会吧计算属性当作方法去调用
+
+            }
+        })
+    </script>
+</body>
+
+</html>

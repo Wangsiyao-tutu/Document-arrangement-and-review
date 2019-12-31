@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="a">
+        <select v-model="opt">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="text" v-model="b">
+        <button @click="calc">=</button>
+        <input type="text" v-model="result">
+        <!-- <input type="number" v-model="a">
+        <select v-model="opt">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <input type="number" v-model="b">
+        <input type="button" value="=" @click='calc'>
+        <input type="number" v-model="result"> -->
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                a: 0,
+                b: 0,
+                result: 0,
+                opt: '+'
+            },
+            methods: {
+                calc() {
+                    switch (this.opt) {
+                        case '+':
+                            this.result = Number(this.a) + Number(this.b)
+                            break;
+                        case '-':
+                            this.result = Number(this.a) - Number(this.b)
+                            break;
+                        case '*':
+                            this.result = Number(this.a) * Number(this.b)
+                            break;
+                        case '/':
+                            this.result = Number(this.a) / Number(this.b)
+                            break;
+                    }
+                    // let str = 'Number(this.a)' + this.opt + 'Number(this.b)'
+                    // this.result = eval(str)
+                }
+            },
+            watch: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

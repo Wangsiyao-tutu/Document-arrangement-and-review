@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style></style>
+</head>
+
+<body>
+    <div id="demo">
+        <!-- v-bind缩写为:  是vue中用于绑定属性的指令,会将后面的东西当作js变量和表达式-->
+        <input type="button" value="btn" title="123">
+        <input type="button" value="btn" :title="mytitle">
+        <input type="button" value="btn" :title="mytitle + ' hello world'">
+    </div>
+
+    <script src="../lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#demo',
+            data: {
+                mytitle: 'HAHA'
+            }
+        })
+    </script>
+</body>
+
+</html>

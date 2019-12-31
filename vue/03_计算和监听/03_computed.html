@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style></style>
+</head>
+<script src="../lib/vue.js"></script>
+
+<body>
+    <div id="demo">
+        <select v-model="site">
+            <option value="Google http://www.google.com">Google http://www.google.com </option>
+            <option value="百度 http://www.baidu.com">百度 http://www.baidu.com </option>
+            <option value="网易 http://www.163.com">网易 http://www.163.com </option>
+        </select>
+        <p>name：{{name}}</p>
+        <p>url：{{url}}</p>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#demo',
+            data: {
+                name: 'Google',
+                url: 'http://www.google.com'
+            },
+            computed: {
+                site: {
+                    // getter
+                    get: function () {
+                        return this.name + ' ' + this.url
+                    },
+                    // setter
+                    set: function (newValue) {
+                        console.log(newValue)
+                        let names = newValue.split(' ')
+                        console.log(names)
+                        this.name = names[0]
+                        this.url = names[names.length - 1]
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

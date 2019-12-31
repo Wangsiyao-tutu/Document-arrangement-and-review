@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        {{ msg | timeFilter() }}
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+        import { aa, btn } from 'iview'
+        Vue.filter('timeFilter', function(dateStr, pattern = '') {
+            let dt = new Date(dateStr)
+            console.log(dt.getTime())
+            //yyyy-mm-dd
+            let y = dt.getFullYear()
+            let m = dt.getMonth() + 1
+            let d = dt.getDate()
+
+            if (pattern.toLowerCase() == 'yyyy-mm-dd') {
+                return `${y}-${m}-${d}`
+            } else {
+                let hh = dt.getHours()
+                let mm = dt.getMinutes()
+                let ss = dt.getSeconds()
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+            }
+            // return y + '-' + m + '-' + d
+        })
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                msg: 1556555555000
+            }
+        })
+
+        function show() {
+
+        }
+
+        var a = function() {
+
+        }
+    </script>
+</body>
+
+</html>

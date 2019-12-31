@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>Vue.extend扩展实例构造器</title>
+</head>
+<body>
+    <baidu></baidu>
+    <!-- <span id='baidu'>跳转</span> -->
+
+    <template id="tmp1">
+        <div>
+            <button @click='get()'>啊吗棕</button>
+        </div>
+    </template>
+    <script type="text/javascript" src="../js/vue/vue.min.js"></script>
+    <script type="text/javascript">
+ 
+        //使用Vue.extend，用它来编写一个扩展实例构造器。
+
+        var baiduExtend = Vue.extend({
+            template:"#tmp1",
+            data:function(){
+                return {
+                    bdname:'百度',
+                    bdurl:'https://www.baidu.com'
+                }
+            },
+            methods:{
+                get(){
+                    console.log(9)
+                }
+            }
+        })
+        //扩展实例构造器是需要挂载的，我们再进行一次挂载
+        new baiduExtend().$mount('baidu');
+        //还可以通过HTML标签上的id或者class来生成扩展实例构造器，Vue.extend里的代码是一样的
+        // new baiduExtend().$mount('#baidu');
+    </script>
+</body>
+</html>

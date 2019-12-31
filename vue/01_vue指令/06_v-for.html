@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style></style>
+</head>
+<script src="../lib/vue.js"></script>
+
+<body>
+	<div id="demo">
+		<!-- 数组 -->
+		<div v-for="(val, index) in array">
+			{{ index }}: {{ val }}
+		</div>
+		************************************************************
+		<!-- 对象 -->
+		<div v-for="(val, key, index) in object">
+			{{ index }}:{{ key }}: {{ val }}
+		</div>
+		************************************************************
+		<!-- 数字 -->
+		<div v-for="(val, index) in 5">
+			{{ index }}: {{ val }}
+		</div>
+		************************************************************
+		<!-- 关于v-for循环加key的问题 -->
+		<input type="text" v-model="id">
+		<input type="text" v-model="name">
+		<button @click="add">添加</button>
+		<div v-for="item in list" :key="item.id">
+			<input type="checkbox">{{item.id}} -- {{item.name}}
+		</div>
+		<!-- 注意v-for循环的时候，key属性只能使用number/string属性，必须使用v-bind的形式制定key的值，保证数据的唯一性 -->
+	</div>
+	<script>
+		var vm = new Vue({
+			el: '#demo',
+			data: {
+				id: '',
+				name: '',
+				array: [
+					1, 2, 3, 4, 5, 6
+				],
+				object: {
+					author: 'AAAAA',
+					battle: 'BBBBB',
+					captain: 'CCCCC'
+				},
+				list: [{
+						id: 1,
+						name: '小a'
+					},
+					{
+						id: 2,
+						name: '小b'
+					},
+					{
+						id: 3,
+						name: '小c'
+					},
+					{
+						id: 4,
+						name: '小d'
+					},
+				]
+			},
+			methods: {
+				add() {
+					this.list.unshift({
+						id: this.id,
+						name: this.name
+					})
+				}
+			},
+		})
+	</script>
+</body>
+
+</html>

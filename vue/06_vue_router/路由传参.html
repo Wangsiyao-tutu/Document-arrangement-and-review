@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="demo">
+        <!-- to传参时带参数，不需要改变path的配置 -->
+        <router-link to="/login?id=10&name=wsy">登录</router-link>
+        <router-link to="/register/22/ls">注册</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <script>
+        var login = {
+            template: '<h1>登录 --- {{this.$route.query.id}} --- {{this.$route.query.name}} </h1>',
+            created() {
+                // console.log(this.$route.query)
+            }
+        }
+        var register = {
+            template: '<h1>注册 --- {{this.$route.params.id}} --- {{this.$route.params.name}} </h1>',
+            created() {
+                console.log(this)
+            }
+        }
+
+        var router = new VueRouter({
+            routes: [{
+                    path: '/login',
+                    component: login
+                },
+                {
+                    path: '/register/:id/:name',
+                    component: register
+                }, {
+                    path: '/',
+                    directive: '/login'
+                }
+            ]
+        })
+
+        var vm = new Vue({
+            el: '#demo',
+            router,
+            watch: {
+                '$route.path': function(newVal, oldVal) {
+                    console.log(newVal, oldVal)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<script src="../lib/vue.js"></script>
+
+<body>
+    <div id="demo">
+        <!-- v-if，v-show绑定的值决定元素是否显示在页面上 -->
+        <!-- 绑定的值可以转换为表达式进行运算或者进行判断 -->
+        <div v-if="1 + 1 == 2">
+            {{msg}}
+        </div>
+
+        <div v-html="h1" v-show="true"></div>
+        <!-- 区别:v-if彻底的消灭这个元素和创造这个元素 -->
+        <!-- v-show只是隐藏和显示这个元素 -->
+    </div>
+    <div>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#demo',
+            data() {
+                return {
+                    msg: 'Hello World',
+                    h1: '<h1>Hello World</h1>'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

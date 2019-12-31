@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<script src="../lib/vue.js"></script>
+
+<body>
+    <div id="demo">
+        <!-- 双大括号文本插值，带括号包含的东西就就成了了一个变量 -->
+        <span>{{msg}}</span>
+        <!-- 和双大括号类似，但会将标签里的原有的内容代替 -->
+        <div v-text="msg"></div>
+        <!-- 将变量所对应的值，转换为html模板 -->
+        <div v-html="h1"></div>
+        <!-- 解决加载文件慢而导致的用户体验的问题 -->
+        <div v-cloak>{{msg}}</div>
+
+        <!-- 可以进行简单运算 -->
+        {{1+1*2/2}}
+    </div>
+    <div>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#demo',
+            data() {
+                return {
+                    msg: 'Hello World',
+                    h1: '<h1>Hello World</h1>'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

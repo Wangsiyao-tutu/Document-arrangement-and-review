@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<script src="../lib/vue.js"></script>
+
+<body>
+    <div id="demo">
+        <!-- v-on指令用来定义vue中的事件 简写：@-->
+        <input type="button" value="btn_02" v-on:click="btn">
+        <input type="button" value="btn_02" @click="btn">
+        <input type="button" value="btn_01" @click="btn($event)">
+    </div>
+    <div>
+
+    </div>
+    <script>
+        var vm = new Vue({
+            el: '#demo',
+            methods: {
+                btn(el) {
+                    console.log(el)
+                    alert(999999)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

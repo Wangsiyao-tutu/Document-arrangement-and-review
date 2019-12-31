@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 只有表单元素才可以和用户进行交互 -->
+    <!-- v-model可以同步view，model之间的数据 -->
+    <!-- v-model只能运用在表单元素中，例如input(radio,text,address,email),select,checkbox,textarea -->
+    <div id="app" v-cloak>
+        <span>{{msg}}</span>
+        <p>
+            <input type="text" v-model="msg">
+        </p>
+    </div>
+    <script src="../lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: 'wsy'
+            },
+            created() {
+                console.log(9)
+                this.msg = res.result
+            }
+        })
+        console.log(vm)
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" @keyup.f2="show">
+    </div>
+
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/jquery.js"></script>
+    <script>
+        // 使用Vue.directive()定义全局指令
+        // 参数1：指令名称，在定义的时候指令名称不需要加 v- 前缀
+        // 在调用的时候，需要加 v- 前缀
+        // 参数2：是一个对象，这个对象里，有一些指令相关的函数，这些函数可以在特定阶段，执行相关的操作
+
+        Vue.directive('focus', {
+            bind: function (el) { // 每当指令绑定到元素上的时候会立即实执行bind函数，只执行一次
+                // el：表示当指令绑定到哪个元素上就代表哪个元素
+                // 在每个函数中，第一个参数，永远是el，表示被绑定指令的那个元素，原生DOM
+                el.focus()
+                // 在元素刚绑定了指令的时候，还没有插入到DOM中去，调用focus没有作用，一个元素只有插入DOM元素后，擦可以获取焦点
+            },
+            inserted: function (el) { // 表示元素插入到DOM中的时候会执行，inserted函数，触发一次
+                el.focus()
+            },
+            updated: function () { // 当组件更新的时候，会执行updated函数，可能会触发多次
+
+            }
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '曾经，我是个单纯的男人，单纯的我，傻傻的问，谁是世界上最单纯的男人'
+            },
+            methods: {
+                show() {}
+            }
+        })
+    </script>
+</body>
+
+</html>
